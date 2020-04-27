@@ -1,0 +1,41 @@
+[
+
+    {
+        "id": "preferences",
+        "children": [
+            {
+                "id": "package-settings",
+                "children": [
+                    {
+                        "caption": "DeepCode", 
+                        "children": [
+                            {
+                                "caption": "-"
+                            },
+                            {
+                                "caption": "Settings",
+                                "command": "edit_settings", "args":
+                                {
+                                    "base_file": "${packages}/deepcode_sublime_plugin/Deepcode.sublime-settings",
+                                    "default": "${packages}/deepcode_sublime_plugin/Deepcode.sublime-settings"
+                                },
+                            },
+
+                            {
+                                "caption": "-"
+                            },
+                            {
+                                "caption": "LICENSE",
+                                "command": "open_file",
+                                "args": {
+                                    "file": "${packages}/sublime-plugin/LICENSE"
+                                }
+                            }
+                        ]
+                    }
+                ]
+            }
+        ]
+    }
+]
+

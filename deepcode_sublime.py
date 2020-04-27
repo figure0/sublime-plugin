@@ -1,0 +1,22 @@
+import os
+import sublime
+import sublime_plugin
+
+
+from .utils import is_global_python_version_compatible, patch_local_deepcode
+from .settings import set_initial_settings_if_needed
+
+os.environ['LC_CTYPE'] = "en_US.UTF-8"
+os.environ['LC_ALL'] = "en_US.UTF-8"
+os.environ['LANG'] = "en_US.UTF-8"
+
+def plugin_loaded():
+    if not is_global_python_version_compatible():
+        return
+    patch_local_deepcode()
+    set_initial_settings_if_needed()
+
+
+class Deepcode(sublime_plugin.EventListener):
+    def on_post_save_async(self, view):
+        view.window().run_command('deepcode_analyze')

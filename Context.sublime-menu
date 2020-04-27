@@ -1,0 +1,21 @@
+[
+    {
+        "caption": "DeepCode",
+        "mnemonic": "F",
+        "id": "file",
+        "children":
+        [
+            { "command": "deepcode_analyze", "caption": "Analyze Project" },
+            { "command": "deepcode_show_results_panel", "caption": "Show Results Panel" },
+            { "caption": "-" },
+            {
+                "caption": "Settings",
+                "command": "edit_settings", "args":
+                {
+                    "base_file": "${packages}/deepcode_sublime_plugin/Deepcode.sublime-settings",
+                    "default": "${packages}/deepcode_sublime_plugin/Deepcode.sublime-settings"
+                },
+            }
+        ]
+    }
+]
