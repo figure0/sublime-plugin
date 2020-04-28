@@ -2,6 +2,7 @@
 	"serviceUrl": "https://www.deepcode.ai",
 	"enableLinters": false,
 	"debug": false,
-	"concented": [],
-	"token": null
+	"consented": [],
+	"token": null,
+	"customPythonPath": null
 }

@@ -11,8 +11,6 @@ from .progress import handle_progress_update
 from .settings import get_service_url, get_linters_enabled, set_token, get_token
 from .statuses import set_status
 
-PERCENT = '([A-Za-z]+.*%)\\|'
-FILE = '(\\w+.*)f \\['
 
 def terminate_login(view, proc):
     proc.kill()
@@ -41,7 +39,7 @@ def authenticate(view):
 
 def deepcode(*args):
     MODULE_DIR = "{}/lib".format(os.path.dirname(os.path.realpath(__file__)))
-    return subprocess.Popen(['python', '-m', 'deepcode'] + list(args), stdout=subprocess.PIPE, stderr=subprocess.PIPE,
+    return subprocess.Popen(['python3', '-m', 'deepcode'] + list(args), stdout=subprocess.PIPE, stderr=subprocess.PIPE,
                             cwd=MODULE_DIR)
 
 

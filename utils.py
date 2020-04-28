@@ -1,9 +1,12 @@
 import os
+import platform
 import re
 import sublime
 import subprocess
 
-from .consts import WARNING, ERROR, INFO
+from .consts import WARNING, ERROR, INFO, MAC_OS_BIN_PATHS
+from .settings import get_custom_python_path
+from .session import set_is_python_version_valid
 
 CLI_STARTER = """
 # -*- coding: utf-8 -*-
@@ -21,6 +24,7 @@ def is_global_python_version_compatible():
             [major, minor, patch] = [int(x) for x in re.search(r'Python\s*([\d.]+)', proc.stdout.read().decode('utf-8')).group(1).split('.')]
             if major < 3 or minor < 6 or (minor == 6 and patch < 5):
                 raise Exception('Global Python version has to be 3.6 or higher')
+        set_is_python_version_valid(True)
         return True
     except Exception as e:
         print('Python version exception', e)
@@ -38,6 +42,18 @@ def patch_local_deepcode():
     except Exception as e:
         print('path local deepcode exception: ', e)
         sublime.error_message('There was an error installing/upgrading deepcode scripts')
+
+def merge_two_lists(fst, snd):
+    return fst + list(set(snd) - set(fst))
+
+def fix_python_path_if_needed():
+    if platform.system() == 'Darwin':
+        updated_paths = ':'.join(merge_two_lists(MAC_OS_BIN_PATHS, os.environ['PATH'].split(':')))
+        os.environ['PATH'] = updated_paths
+
+    custom_python_path = get_custom_python_path()
+    if custom_python_path:
+        os.environ['PATH'] = '{}:{}'.format(os.environ['PATH'], custom_python_path)
 
 def find(point, errors):
     for p in errors:

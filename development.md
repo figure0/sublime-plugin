@@ -15,7 +15,7 @@
 7. Go to deepcode_sublime and save file.
 
 
-## Commads and Development
+## Commands and Development
 
 All plugin commands are prefixed with `deepcode_*.py`, and all of the util files are without prefix. 
 
@@ -52,7 +52,7 @@ Sometimes reload of sublime is needed, since plugin development environment is n
 
 ## Tests
  
-Tests are located in *tests* directory, and they are bound to the sublime environment, and therefore they must be run inside of the sublime.
+Tests are located i *tests* directory, and they are bound to sublime environment, and therefor they must be run inside of sublime.
 
 #### Instructions:
 
