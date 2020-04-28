@@ -1,15 +1,17 @@
 from .consts import ERROR, WARNING
 
+
 def get_color_for_severity(severity):
     if severity is WARNING:
-        return '⚠️'
+        return "⚠️"
     elif severity is ERROR:
-        return '⛔'
+        return "⛔"
     else:
-        return ' ⓘ'
+        return " ⓘ"
+
 
 def get_popup_content(message, severity):
-	return """
+    return """
 	  <div style="display: block; height: auto; overflow-y: visible; padding: 10px 0; height: auto">
       <span>{}</span>
       <span>{}</span>
@@ -23,4 +25,6 @@ def get_popup_content(message, severity):
           <a href="panel" style="text-decoration: none; width: 260px; text-align: center; cursor: pointer; color: lightblue; font-size: 10px; border-radius: 5px;">Show all problems...</a>
         </div>
     </div> 
-  """.format(get_color_for_severity(severity), message)
+  """.format(
+        get_color_for_severity(severity), message
+    )

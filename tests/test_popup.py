@@ -11,15 +11,16 @@ class TestUtils(unittest.TestCase):
 
     def test_get_error_icon(self):
         icon = get_color_for_severity(1)
-        self.assertEqual(icon, '⛔')
+        self.assertEqual(icon, "⛔")
 
     def test_get_warning_icon(self):
         icon = get_color_for_severity(2)
-        self.assertEqual(icon, '⚠️')
+        self.assertEqual(icon, "⚠️")
 
     def test_get_info_icon(self):
         icon = get_color_for_severity(3)
-        self.assertEqual(icon, ' ⓘ')
+        self.assertEqual(icon, " ⓘ")
 
-if __name__ == '__main__':
+
+if __name__ == "__main__":
     unittest.main()
