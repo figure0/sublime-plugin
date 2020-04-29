@@ -2,13 +2,13 @@ import sublime
 import sublime_plugin
 
 from .persist import DB, HIGHLIGHTED_REGIONS
-from .consts import HIGHLIGH_REGION_NAME
+from .consts import HIGHLIGH_REGION_NAME, ERROR, WARNING
 
 
 def get_highlight_color(severity):
-    if severity == 1:
+    if severity == ERROR:
         return "region.redish.plugin"
-    elif severity == 2:
+    elif severity == WARNING:
         return "region.yellowish.plugin"
     else:
         return "region.bluish.plugin"
@@ -31,7 +31,7 @@ def highlight_errors(view):
     errors_in_active_file = project_errors.get("files").get(file_name)
     suggestions = project_errors.get("suggestions")
     HIGHLIGHTED_REGIONS[file_name] = []
-    print("____LOGER____")
+    print("____LOGGER____")
     if errors_in_active_file:
         suggestions_for_file = list(errors_in_active_file.keys())
         for s, errors in errors_in_active_file.items():

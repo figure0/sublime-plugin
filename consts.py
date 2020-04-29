@@ -1,6 +1,6 @@
-ERROR = 1
+ERROR = 3
 WARNING = 2
-INFO = 3
+INFO = 1
 
 AUTH_TIMEOUT = 60
 

@@ -20,7 +20,7 @@ class DeepcodeHighlight(sublime_plugin.EventListener):
         if errors is not None and len(errors) is not 0:
             popup_data = find(point, errors)
             if popup_data is not None:
-                view.show_popup(
+                sublime.set_timeout_async(lambda: view.show_popup(
                     get_popup_content(
                         popup_data.get("message"), popup_data.get("severity")
                     ),
@@ -32,4 +32,6 @@ class DeepcodeHighlight(sublime_plugin.EventListener):
                         "deep_code_ignore",
                         {"point": point, "type": a, "id": popup_data.get("id")},
                     ),
-                )
+                ), 300)
+
+                

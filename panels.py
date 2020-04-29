@@ -118,7 +118,7 @@ def print_results(panel, files_with_issues, report_message, phantom_counter):
         reverse=True,
     )
     for record in files_with_issues:
-        record["issues"] = sorted(record["issues"], key=lambda k: k["severity"])
+        record["issues"] = sorted(record["issues"], key=lambda k: k["severity"], reverse=True)
 
     for file in files_with_issues:
         panel.run_command(
