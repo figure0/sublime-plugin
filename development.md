@@ -7,11 +7,11 @@
 ## Steps
 
 1. Install Sublime Text 3
-2. Open Sublime Text and install Package Control
+2. Open Sublime Text and install Package Control (https://packagecontrol.io/installation)
 3. Go to browse packages 
-4. Paste deepcode_sublime_plugin directory
+4. Paste this folder's content into Users/deepcode_sublime_plugin directory
 5. Restart Sublime 
-6. Go to List Installed Packages and check if deepcode_sublime_package is there
+6. Go to List Installed Packages and check if deepcode_sublime_plugin is there
 7. Go to deepcode_sublime and save file.
 
 
