@@ -20,18 +20,19 @@ class DeepcodeHighlight(sublime_plugin.EventListener):
         if errors is not None and len(errors) is not 0:
             popup_data = find(point, errors)
             if popup_data is not None:
-                sublime.set_timeout_async(lambda: view.show_popup(
-                    get_popup_content(
-                        popup_data.get("message"), popup_data.get("severity")
+                sublime.set_timeout_async(
+                    lambda: view.show_popup(
+                        get_popup_content(
+                            popup_data.get("message"), popup_data.get("severity")
+                        ),
+                        sublime.HIDE_ON_MOUSE_MOVE_AWAY,
+                        point,
+                        1000,
+                        1000,
+                        lambda a: view.run_command(
+                            "deep_code_ignore",
+                            {"point": point, "type": a, "id": popup_data.get("id")},
+                        ),
                     ),
-                    sublime.HIDE_ON_MOUSE_MOVE_AWAY,
-                    point,
-                    1000,
-                    1000,
-                    lambda a: view.run_command(
-                        "deep_code_ignore",
-                        {"point": point, "type": a, "id": popup_data.get("id")},
-                    ),
-                ), 300)
-
-                
+                    300,
+                )

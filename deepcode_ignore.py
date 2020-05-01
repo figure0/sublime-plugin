@@ -113,3 +113,7 @@ class DeepCodeIgnoreCommand(sublime_plugin.TextCommand):
                 )
 
         self.view.hide_popup()
+
+    def is_enabled(self):
+        print("HERE DANCE")
+        return True
