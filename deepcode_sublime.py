@@ -46,6 +46,3 @@ class Deepcode(sublime_plugin.EventListener):
     def on_post_save_async(self, view):
         view.window().run_command("deepcode_analyze", {"on_save": True})
 
-    def on_post_window_command(self, window, command_name, args):
-        if command_name == "open_recent_folder":
-            self.analyze_project_on_load()
