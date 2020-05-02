@@ -58,6 +58,9 @@ def insert_new_line_with_comment(view, edit, point, type, id, target):
         snip = "{0}{1} {2} {3}".format(
             indent, data[1][0][0], get_ignore_text(type, id), data[1][0][1]
         )
+    else:
+        return
+
     view.insert(edit, target.begin(), snip)
     view.sel().clear()
     view.sel().add(
@@ -112,8 +115,4 @@ class DeepCodeIgnoreCommand(sublime_plugin.TextCommand):
                     self.view, edit, point, type, id, current_line
                 )
 
-        self.view.hide_popup()
-
-    def is_enabled(self):
-        print("HERE DANCE")
-        return True
+        # self.view.hide_popup()

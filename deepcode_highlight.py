@@ -23,7 +23,7 @@ class DeepcodeHighlight(sublime_plugin.EventListener):
                 sublime.set_timeout_async(
                     lambda: view.show_popup(
                         get_popup_content(
-                            popup_data.get("message"), popup_data.get("severity")
+                            popup_data.get("message"), popup_data.get("severity"), view
                         ),
                         sublime.HIDE_ON_MOUSE_MOVE_AWAY,
                         point,
