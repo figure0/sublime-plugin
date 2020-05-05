@@ -45,4 +45,3 @@ class Deepcode(sublime_plugin.EventListener):
 
     def on_post_save_async(self, view):
         view.window().run_command("deepcode_analyze", {"on_save": True})
-

@@ -24,7 +24,9 @@ def login(view):
     )
     if continue_with_login:
         set_status(view, "DeepCode: Please, complete login process in opened browser.")
-        with deepcode("--service-url", get_service_url(), "login") as proc:
+        with deepcode(
+            "--service-url", get_service_url(), "--source", "sublime", "login"
+        ) as proc:
             t = Timer(AUTH_TIMEOUT, lambda: terminate_login(view, proc))
             t.start()
             resp = re.findall(

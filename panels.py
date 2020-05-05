@@ -134,7 +134,7 @@ def print_results(panel, files_with_issues, report_message, phantom_counter):
         for index, issue in enumerate(file["issues"]):
             panel.run_command("append", {"characters": "{}\n".format(issue["message"])})
             if len(file["issues"]) - 1 == index:
-                panel.run_command("append", {"characters": "{}\n".format('     ⠀')})
+                panel.run_command("append", {"characters": "{}\n".format("     ⠀")})
             phantom_counter += 1
             add_ingore_commands_phantom(
                 panel, phantom_counter, file["original_name"], issue
