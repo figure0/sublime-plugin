@@ -4,7 +4,7 @@ import re
 import sublime
 import subprocess
 
-from .consts import WARNING, ERROR, INFO, MAC_OS_BIN_PATHS
+from .consts import WARNING, ERROR, INFO, MAC_OS_BIN_PATHS, LINUX_BIN_PATHS
 from .settings import get_custom_python_path
 from .session import set_is_python_version_valid
 
@@ -33,12 +33,12 @@ def is_global_python_version_compatible():
                 .split(".")
             ]
             if major < 3 or minor < 6 or (minor == 6 and patch < 5):
-                raise Exception("Global Python version has to be 3.6 or higher")
+                raise Exception("Global Python version has to be 3.6.5 or higher")
         set_is_python_version_valid(True)
         return True
     except Exception as e:
         print("Python version exception", e)
-        sublime.error_message("Global Python version has to be 3.6 or higher")
+        sublime.error_message("Global Python version has to be 3.6.5 or higher")
         return False
 
 
@@ -78,6 +78,11 @@ def fix_python_path_if_needed():
     if platform.system() == "Darwin":
         updated_paths = ":".join(
             merge_two_lists(MAC_OS_BIN_PATHS, os.environ["PATH"].split(":"))
+        )
+        os.environ["PATH"] = updated_paths
+    elif platform.system() == "Linux":
+        updated_paths = ":".join(
+            merge_two_lists(LINUX_BIN_PATHS, os.environ["PATH"].split(":"))
         )
         os.environ["PATH"] = updated_paths
 

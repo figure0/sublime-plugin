@@ -58,10 +58,9 @@ def show_results_in_panel(view, resp, link):
     )
     report_message = get_error_count(problems, ISSUES_TEXT_BASE)
 
-    add_see_results_phantom(panel, link)
     print_results(panel, files_with_issues, report_message, phantom_counter)
+    add_see_results_phantom(panel, link)
 
-    panel.run_command("fold_all")
     panel.set_read_only(True)
 
     if numberOfIssues > 0:
@@ -139,3 +138,4 @@ def print_results(panel, files_with_issues, report_message, phantom_counter):
             add_ingore_commands_phantom(
                 panel, phantom_counter, file["original_name"], issue
             )
+    panel.run_command("fold_all")

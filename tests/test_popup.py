@@ -1,6 +1,6 @@
 import unittest
-from unittest.mock import patch
 
+from deepcode_sublime_plugin.consts import ERROR, WARNING, INFO
 from deepcode_sublime_plugin.popup import get_color_for_severity
 
 
@@ -10,15 +10,15 @@ class TestUtils(unittest.TestCase):
         pass
 
     def test_get_error_icon(self):
-        icon = get_color_for_severity(1)
+        icon = get_color_for_severity(ERROR)
         self.assertEqual(icon, "⛔")
 
     def test_get_warning_icon(self):
-        icon = get_color_for_severity(2)
+        icon = get_color_for_severity(WARNING)
         self.assertEqual(icon, "⚠️")
 
     def test_get_info_icon(self):
-        icon = get_color_for_severity(3)
+        icon = get_color_for_severity(INFO)
         self.assertEqual(icon, " ⓘ")
 
 

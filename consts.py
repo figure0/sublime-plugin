@@ -34,3 +34,15 @@ MAC_OS_BIN_PATHS = [
     "/sbin",
     "/usr/X11/bin",
 ]
+
+LINUX_BIN_PATHS = [
+    "/bin",
+    "/sbin",
+    "/usr/bin",
+    "/usr/sbin",
+    "/usr/local/bin",
+    "/usr/local/sbin",
+    "/usr/X11/bin",
+    "/opt",
+    "/opt/bin"
+]

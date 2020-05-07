@@ -12,7 +12,7 @@ from .session import (
     add_project_to_asked_to_consent,
     is_python_version_valid,
     user_asked_to_consent_for_project,
-    add_project_to_initial_analysis_runned_list,
+    add_project_to_initial_analysis_ran_list,
 )
 
 
@@ -30,7 +30,7 @@ def run_analysis(view, on_save=False):
         return
 
     project_path = view.window().folders()[0]
-    add_project_to_initial_analysis_runned_list(project_path)
+    add_project_to_initial_analysis_ran_list(project_path)
     if get_token() is None:
         authenticate(view)
 

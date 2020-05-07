@@ -45,17 +45,14 @@ def add_ingore_commands_phantom(panel, phantom_counter, file_name, issue):
 
 def add_see_results_phantom(panel, link):
     panel.erase_phantoms("see_results")
-    sublime.set_timeout_async(
-        lambda: panel.add_phantom(
-            "see_results",
-            panel.find("›", 0, sublime.IGNORECASE),
-            '<a href="{}" style="font-weight: bold; color: #fff; font-size: 13px;">See Results In Dashboard</a>'.format(
-                link
-            ),
-            sublime.LAYOUT_INLINE,
-            lambda x: panel.window().run_command("open_url", {"url": x}),
+    panel.add_phantom(
+        "see_results",
+        panel.find("›", 0, sublime.IGNORECASE),
+        '<a href="{}" style="font-weight: bold; color: #fff; font-size: 13px;">See Results In Dashboard</a>'.format(
+            link
         ),
-        100,
+        sublime.LAYOUT_INLINE,
+        lambda x: panel.window().run_command("open_url", {"url": x}),
     )
 
 
