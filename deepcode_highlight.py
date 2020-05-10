@@ -12,9 +12,6 @@ class DeepcodeHighlight(sublime_plugin.EventListener):
     def on_load(self, view):
         highlight_errors(view)
 
-    def on_activated(self, view):
-        highlight_errors(view)
-
     def on_hover(self, view, point, hover_zone):
         errors = HIGHLIGHTED_REGIONS.get(view.file_name())
         if errors is not None and len(errors) is not 0:

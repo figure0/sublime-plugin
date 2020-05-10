@@ -37,5 +37,6 @@ class TestUtils(unittest.TestCase):
         should_be_true = is_initial_analysis_ran_for_project(test_path)
         self.assertEqual(should_be_true, True)
 
+
 if __name__ == "__main__":
     unittest.main()

@@ -44,5 +44,5 @@ LINUX_BIN_PATHS = [
     "/usr/local/sbin",
     "/usr/X11/bin",
     "/opt",
-    "/opt/bin"
+    "/opt/bin",
 ]

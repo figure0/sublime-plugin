@@ -48,7 +48,7 @@ def add_see_results_phantom(panel, link):
     panel.add_phantom(
         "see_results",
         panel.find("›", 0, sublime.IGNORECASE),
-        '<a href="{}" style="font-weight: bold; color: #fff; font-size: 13px;">See Results In Dashboard</a>'.format(
+        '<a href="{}" style="font-weight: bold; color: #F0F0F0 ; font-size: 12px;">See Results In Dashboard</a>'.format(
             link
         ),
         sublime.LAYOUT_INLINE,

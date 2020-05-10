@@ -74,13 +74,14 @@ def show_results_in_panel(view, resp, link):
 def configure_panel(panel, project_path):
     panel.settings().set("gutter", True)
     panel.settings().set("color_scheme", "Mariana.sublime-color-scheme")
-    panel.settings().set(
-        "result_file_regex", r"(?:⚠️|⛔|ⓘ) (.*) \[(\d+), (\d+)\]: (.*) "
-    )
+    panel.settings().set("result_file_regex", r"(^\S+)(.*)(?:⚠️|⛔|ⓘ)(.*)")
+    panel.settings().set("result_line_regex", r"(?:⚠️|⛔|ⓘ) \[(\d+), (\d+)\]: (.*)")
+
     panel.settings().set("line_numbers", False)
     panel.settings().set("line_padding_bottom", 5)
     panel.settings().set("line_padding_top", 15)
     panel.settings().set("result_base_dir", project_path)
+    panel.settings().set("fade_fold_buttons", False)
 
 
 def get_formated_file_dict(project_path, file_name):
@@ -95,9 +96,8 @@ def get_formated_file_dict(project_path, file_name):
 def get_formated_file_issue(severity, file, error, suggestion_index, suggestions):
     return {
         "severity": severity,
-        "message": "  {} {} [{}, {}]: {}".format(
+        "message": "  {} [{}, {}]: {}".format(
             get_severity_status_string(severity),
-            file["name"],
             error.get("rows")[0],
             error.get("cols")[0],
             suggestions.get(suggestion_index).get("message"),
