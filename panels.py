@@ -76,7 +76,6 @@ def configure_panel(panel, project_path):
     panel.settings().set("color_scheme", "Mariana.sublime-color-scheme")
     panel.settings().set("result_file_regex", r"(^\S+)(.*)(?:⚠️|⛔|ⓘ)(.*)")
     panel.settings().set("result_line_regex", r"(?:⚠️|⛔|ⓘ) \[(\d+), (\d+)\]: (.*)")
-
     panel.settings().set("line_numbers", False)
     panel.settings().set("line_padding_bottom", 5)
     panel.settings().set("line_padding_top", 15)

@@ -24,7 +24,7 @@ def plugin_loaded():
     fix_python_path_if_needed()
     if not is_global_python_version_compatible():
         return
-    # patch_local_deepcode()
+    patch_local_deepcode()
     set_initial_settings_if_needed()
 
 
