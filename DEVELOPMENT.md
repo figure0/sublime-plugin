@@ -9,11 +9,11 @@
 1. Install Sublime Text 3
 2. Open Sublime Text and install Package Control (https://packagecontrol.io/installation)
 3. Go to browse packages 
-4. Create a directly (if not exists) 'DeepcodeAI'
-5. Paste this folder's content into DeepcodeAI directory
+4. Create a directly (if not exists) 'DeepCodeAI'
+5. Paste this folder's content into DeepCodeAI directory
 5. Restart Sublime 
-6. Go to List Installed Packages and check if DeepcodeAI is there
-7. Go to DeepcodeAI and save file.
+6. Go to List Installed Packages and check if DeepCodeAI is there
+7. Go to DeepCodeAI and save file.
 
 
 ## Commands and Development
@@ -43,11 +43,11 @@ For development after initial load, comment out  `patch_local_deepcode()` , so y
 2. **Context.sublime-menu** - defines content and actions of context menu item (Deepcode)
 
 ### Plugin Settings
-**DeepcodeAI.sublime-settings**
+**DeepCodeAI.sublime-settings**
 Default Plugin settings - **by default read-only** if you wish to change default settings file you must go to `deepcode_settings` command remove or comment out `view.set_read_only(True)` line.
 
 #### Important note
-When you change something in files, **you must reload commands that are affected by change**, and also main package command **DeepcodeAI.py**
+When you change something in files, **you must reload commands that are affected by change**, and also main package command **DeepCodeAI.py**
 
 Sometimes reload of sublime is needed, since plugin development environment is not that great. 
 
@@ -59,4 +59,4 @@ Tests are located i *tests* directory, and they are bound to sublime environment
 
  1. Install ***Unit Testting*** plugin
  2. Run ***Unit Testting Command*** *(cmd + shift + p and type Unit Testing)*
- 3. Enter plugin name in the input panel  *(DeepcodeAI)*
+ 3. Enter plugin name in the input panel  *(DeepCodeAI)*

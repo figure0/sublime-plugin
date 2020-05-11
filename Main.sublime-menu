@@ -16,8 +16,8 @@
                                 "caption": "Settings",
                                 "command": "edit_settings", "args":
                                 {
-                                    "base_file": "${packages}/DeepcodeAI/DeepcodeAI.sublime-settings",
-                                    "default": "${packages}/DeepcodeAI/DeepcodeAI.sublime-settings"
+                                    "base_file": "${packages}/DeepCodeAI/DeepCodeAI.sublime-settings",
+                                    "default": "${packages}/DeepCodeAI/DeepCodeAI.sublime-settings"
                                 },
                             },
 
