@@ -13,8 +13,6 @@
 5. Paste this folder's content into DeepCodeAI directory
 5. Restart Sublime 
 6. Go to List Installed Packages and check if DeepCodeAI is there
-7. Go to DeepCodeAI and save file.
-
 
 ## Commands and Development
 
