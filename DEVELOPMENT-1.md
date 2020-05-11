@@ -60,5 +60,3 @@ Tests are located i *tests* directory, and they are bound to sublime environment
  1. Install ***Unit Testting*** plugin
  2. Run ***Unit Testting Command*** *(cmd + shift + p and type Unit Testing)*
  3. Enter plugin name in the input panel  *(DeepcodeAI)*
-
- 

@@ -2,6 +2,7 @@
 
 **The Sublime package provided by <a href="https://www.deepcode.ai/">DeepCode.ai</a> finds bugs and critical vulnerabilities in your code. We support Java, Python, JavaScript, TypeScript and XML.**
 
+
 # Table of Contents
 
 1. DeepCode package - what is it?
