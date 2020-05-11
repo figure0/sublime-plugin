@@ -9,7 +9,7 @@
 1. Install Sublime Text 3
 2. Open Sublime Text and install Package Control (https://packagecontrol.io/installation)
 3. Go to browse packages 
-4. Create a directly (if not exists) 'DeepCodeAI'
+4. Create a directory (if not exists) 'DeepCodeAI'
 5. Paste this folder's content into DeepCodeAI directory
 5. Restart Sublime 
 6. Go to List Installed Packages and check if DeepCodeAI is there
