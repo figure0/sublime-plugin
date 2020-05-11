@@ -12,20 +12,20 @@ from .consts import (
 
 
 def set_initial_settings_if_needed():
-    deepcode_settings = sublime.load_settings("Deepcode.sublime-settings")
+    deepcode_settings = sublime.load_settings("DeepcodeAI.sublime-settings")
     if deepcode_settings is None:
-        sublime.load_settings("Deepcode.sublime-settings")
-        sublime.save_settings("Deepcode.sublime-settings")
+        sublime.load_settings("DeepcodeAI.sublime-settings")
+        sublime.save_settings("DeepcodeAI.sublime-settings")
 
 
 def get_settings():
-    return sublime.load_settings("Deepcode.sublime-settings")
+    return sublime.load_settings("DeepcodeAI.sublime-settings")
 
 
 def set_settings(path, value):
-    settings = sublime.load_settings("Deepcode.sublime-settings")
-    sublime.load_settings("Deepcode.sublime-settings").set(path, value)
-    sublime.save_settings("Deepcode.sublime-settings")
+    settings = sublime.load_settings("DeepcodeAI.sublime-settings")
+    sublime.load_settings("DeepcodeAI.sublime-settings").set(path, value)
+    sublime.save_settings("DeepcodeAI.sublime-settings")
 
 
 def get_token():

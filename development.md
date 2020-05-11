@@ -43,7 +43,7 @@ For development after initial load, comment out  `patch_local_deepcode()` , so y
 2. **Context.sublime-menu** - defines content and actions of context menu item (Deepcode)
 
 ### Plugin Settings
-**Deepcode.sublime-settings**
+**DeepcodeAI.sublime-settings**
 Default Plugin settings - **by default read-only** if you wish to change default settings file you must go to `deepcode_settings` command remove or comment out `view.set_read_only(True)` line.
 
 #### Important note

@@ -11,7 +11,7 @@ from .consts import (
 from .phantoms import add_settings_key_description_phantom
 
 USER_SETTING = "User"
-SETTINGS_FILE_NAME = "Deepcode.sublime-settings"
+SETTINGS_FILE_NAME = "DeepcodeAI.sublime-settings"
 HIGHLIGHT_REGION_NAME = "settings_errors"
 
 
