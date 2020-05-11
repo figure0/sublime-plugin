@@ -57,6 +57,10 @@ def run_analysis(view, on_save=False):
             lambda: show_results_in_panel(view, DB[project_path], results[1])
         )
         sublime.set_timeout_async(lambda: highlight_errors(view))
+        if not on_save:
+            sublime.set_timeout_async(
+            lambda: view.window().run_command('deepcode_show_results_panel')
+        )
 
 
 class DeepcodeAnalyzeCommand(sublime_plugin.WindowCommand):
