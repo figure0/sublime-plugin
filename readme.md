@@ -31,7 +31,7 @@ In order to show detailed explanation why something was flagged as bug we introd
 
 ## Supported languages
 
-Java, JavaScript, Python, TypeScript,  C/C++  and XML are currently supported.
+Python, JavaScript/TypeScript, Java, C/C++ are currently supported.
 
 # Installation
 
