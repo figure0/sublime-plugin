@@ -2,8 +2,8 @@ import os
 import sublime
 import unittest
 
-from deepcode_sublime_plugin.consts import INFO, WARNING, ERROR
-from deepcode_sublime_plugin.utils import (
+from deepcode_sublime.consts import INFO, WARNING, ERROR
+from deepcode_sublime.utils import (
     find,
     is_global_python_version_compatible,
     merge_two_lists,

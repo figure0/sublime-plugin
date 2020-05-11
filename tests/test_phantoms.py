@@ -1,6 +1,6 @@
 import unittest, sublime
 
-from deepcode_sublime_plugin.phantoms import add_see_results_phantom
+from deepcode_sublime.phantoms import add_see_results_phantom
 
 
 class TestPhantoms(unittest.TestCase):

@@ -1,7 +1,7 @@
 import unittest
 
-from deepcode_sublime_plugin.consts import ERROR, WARNING, INFO
-from deepcode_sublime_plugin.popup import get_color_for_severity
+from deepcode_sublime.consts import ERROR, WARNING, INFO
+from deepcode_sublime.popup import get_color_for_severity
 
 
 class TestUtils(unittest.TestCase):

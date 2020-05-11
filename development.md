@@ -9,9 +9,10 @@
 1. Install Sublime Text 3
 2. Open Sublime Text and install Package Control (https://packagecontrol.io/installation)
 3. Go to browse packages 
-4. Paste this folder's content into deepcode_sublime_plugin directory
+4. Create a directly (if not exists) 'deepcode_sublime'
+5. Paste this folder's content into deepcode_sublime directory
 5. Restart Sublime 
-6. Go to List Installed Packages and check if deepcode_sublime_plugin is there
+6. Go to List Installed Packages and check if deepcode_sublime is there
 7. Go to deepcode_sublime and save file.
 
 
@@ -58,6 +59,6 @@ Tests are located i *tests* directory, and they are bound to sublime environment
 
  1. Install ***Unit Testting*** plugin
  2. Run ***Unit Testting Command*** *(cmd + shift + p and type Unit Testing)*
- 3. Enter plugin name in the input panel  *(deepcode_sublime_plugin)*
+ 3. Enter plugin name in the input panel  *(deepcode_sublime)*
 
  

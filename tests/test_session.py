@@ -2,7 +2,7 @@ import unittest
 from unittest.mock import patch, MagicMock
 
 
-from deepcode_sublime_plugin.session import (
+from deepcode_sublime.session import (
     SESSION_STORAGE,
     set_is_python_version_valid,
     is_python_version_valid,
