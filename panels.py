@@ -85,7 +85,7 @@ def configure_panel(panel, project_path):
 
 def get_formated_file_dict(project_path, file_name):
     return {
-        "name": file_name.replace(project_path + "/", ""),
+        "name": file_name.replace(project_path + os.path.sep, ""),
         "original_name": file_name,
         "total": {WARNING: 0, ERROR: 0, INFO: 0},
         "issues": [],

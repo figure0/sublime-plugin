@@ -84,7 +84,7 @@ def analyze(project_path, view):
                 for deepcode_relpath, pv in v.items():
                     v[
                         project_path
-                        + deepcode_relpath.split(project_path.split("/")[-1])[-1]
+                        + deepcode_relpath.split(project_path.split(os.path.sep)[-1])[-1]
                     ] = v.pop(deepcode_relpath)
 
         return [results, url]

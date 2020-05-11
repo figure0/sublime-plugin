@@ -44,7 +44,7 @@ class TestUtils(unittest.TestCase):
         self.assertEqual(return_val, True)
 
     def test_is_global_python_version_compatible_fail(self):
-        os.environ["PATH"] = "/"
+        os.environ["PATH"] = os.path.sep
         sublime.error_message = print
         return_val = is_global_python_version_compatible()
         self.assertEqual(return_val, False)

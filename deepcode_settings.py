@@ -1,4 +1,4 @@
-import sublime, sublime_plugin, json
+import sublime, sublime_plugin, json, os
 from .settings import get_settings
 from .consts import (
     DEEP_CODE_SETTINGS_DEBUG_KEY,
@@ -17,7 +17,7 @@ HIGHLIGHT_REGION_NAME = "settings_errors"
 
 class DeepcodeSettings(sublime_plugin.EventListener):
     def on_load(self, view):
-        filename = view.file_name().split("/")
+        filename = view.file_name().split(os.path.sep)
         file = filename[-1]
         level = filename[-2]
         if file == SETTINGS_FILE_NAME and level != USER_SETTING:
@@ -52,7 +52,7 @@ class DeepcodeSettings(sublime_plugin.EventListener):
             )
 
     def on_pre_save(self, view):
-        filename = view.file_name().split("/")
+        filename = view.file_name().split(os.path.sep)
         file = filename[-1]
         level = filename[-2]
         errors = []
