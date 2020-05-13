@@ -1,6 +1,7 @@
 import io
 import json
 import os
+import platform
 import re
 import sublime
 import subprocess
@@ -18,15 +19,19 @@ def terminate_login(view, proc):
 
 
 def login(view):
-    continue_with_login = sublime.ok_cancel_dialog(
-        "Use your GitHub, Bitbucket or GitLab account to authenticate with DeepCode",
-        "Login",
-    )
-    if continue_with_login:
-        set_status(view, "DeepCode: Please, complete login process in opened browser.")
+    python_command = "python3"
+
+    def cli_login(python_command):
         with deepcode(
-            "--service-url", get_service_url(), "--source", "sublime", "login"
+            "--service-url",
+            get_service_url(),
+            "--source",
+            "sublime",
+            "login",
+            python_command=python_command,
         ) as proc:
+            if "python3" in proc.stderr.read().decode("utf-8"):
+                raise "Login Failed"
             t = Timer(AUTH_TIMEOUT, lambda: terminate_login(view, proc))
             t.start()
             resp = re.findall(
@@ -34,6 +39,19 @@ def login(view):
             )
             t.cancel()
             return resp[0] if len(resp) > 0 else None
+
+    continue_with_login = sublime.ok_cancel_dialog(
+        "Use your GitHub, Bitbucket or GitLab account to authenticate with DeepCode",
+        "Login",
+    )
+    if continue_with_login:
+        set_status(view, "DeepCode: Please, complete login process in opened browser.")
+        try:
+            return cli_login(python_command)
+        except Exception as e:
+            if python_command == "python3":
+                python_command = "python"
+                return cli_login(python_command)
 
 
 def authenticate(view):
@@ -44,17 +62,20 @@ def authenticate(view):
     sublime.set_timeout_async(lambda: view.window().run_command("deepcode_analyze"), 0)
 
 
-def deepcode(*args):
-    MODULE_DIR = "{}/lib".format(os.path.dirname(os.path.realpath(__file__)))
+def deepcode(*args, python_command="python3"):
+    MODULE_DIR = "{}{}lib".format(
+        os.path.dirname(os.path.realpath(__file__)), os.path.sep
+    )
     return subprocess.Popen(
-        ["python3", "-m", "deepcode"] + list(args),
+        [python_command, "-m", "deepcode"] + list(args),
         stdout=subprocess.PIPE,
         stderr=subprocess.PIPE,
         cwd=MODULE_DIR,
+        shell=platform.system() == "Windows",
     )
 
 
-def analyze(project_path, view):
+def analyze(project_path, view, python_command="python3"):
     args = [
         "--service-url",
         get_service_url(),
@@ -68,8 +89,7 @@ def analyze(project_path, view):
         args.append("--with-linters")
 
     try:
-        proc = deepcode(*args)
-
+        proc = deepcode(*args, python_command=python_command)
         progress_data = io.TextIOWrapper(proc.stderr, encoding="utf-8")
         handle_progress_update(progress_data, view)
 
@@ -77,6 +97,11 @@ def analyze(project_path, view):
         parsedData = json.loads(data)
 
         results = parsedData.get("results")
+        if platform.system() == "Windows":
+            results = {
+                k: {k1.replace("/", "\\"): v1 for k1, v1 in v.items()}
+                for k, v in results.items()
+            }
         url = parsedData.get("url")
 
         for k, v in results.items():
@@ -84,7 +109,9 @@ def analyze(project_path, view):
                 for deepcode_relpath, pv in v.items():
                     v[
                         project_path
-                        + deepcode_relpath.split(project_path.split("/")[-1])[-1]
+                        + deepcode_relpath.split(project_path.split(os.path.sep)[-1])[
+                            -1
+                        ]
                     ] = v.pop(deepcode_relpath)
 
         return [results, url]
@@ -97,5 +124,7 @@ def analyze(project_path, view):
             set_status(view, "DeepCode: 🚧 Service Unavailable")
             proc.kill()
         else:
+            if python_command == "python3":
+                return analyze(project_path, view, python_command="python")
             print("SOMETHING UNEXPECTED", e)
             set_status(view, "DeepCode: ❌ Project Analyze Failed")

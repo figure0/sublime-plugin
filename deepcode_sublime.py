@@ -17,7 +17,6 @@ from .session import (
 os.environ["LC_CTYPE"] = "en_US.UTF-8"
 os.environ["LC_ALL"] = "en_US.UTF-8"
 os.environ["LANG"] = "en_US.UTF-8"
-os.environ["PATH"] = "/usr/bin"
 
 
 def plugin_loaded():
