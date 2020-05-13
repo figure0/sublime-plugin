@@ -19,10 +19,13 @@ if __name__ == '__main__':
 """
 
 
-def is_global_python_version_compatible():
+def is_global_python_version_compatible(python_command="python3"):
     try:
         with subprocess.Popen(
-            ["python3", "-V"], stdout=subprocess.PIPE, stderr=subprocess.PIPE
+            [python_command, "-V"],
+            stdout=subprocess.PIPE,
+            stderr=subprocess.PIPE,
+            shell=platform.system() == "Windows",
         ) as proc:
             [major, minor, patch] = [
                 int(x)
@@ -37,33 +40,44 @@ def is_global_python_version_compatible():
         set_is_python_version_valid(True)
         return True
     except Exception as e:
-        print("Python version exception", e)
-        sublime.error_message("Global Python version has to be 3.6.5 or higher")
+        if python_command == "python3":
+            return is_global_python_version_compatible(python_command="python")
+        sublime.error_message(
+            "This plugin requires python >= 3.6.5. If you want to use a virtual python environment, please adjust package setting 'customPythonPath'"
+        )
         return False
 
 
-def patch_local_deepcode():
+def patch_local_deepcode(python_command="python3"):
     try:
         CWD = os.path.dirname(os.path.realpath(__file__))
-        subprocess.call(["python3", "-m", "pip", "install", "-U", "pip"])
+        subprocess.call(
+            [python_command, "-m", "pip", "install", "-U", "pip"],
+            shell=platform.system() == "Windows",
+        )
         subprocess.call(
             [
-                "python3",
+                python_command,
                 "-m",
                 "pip",
                 "install",
                 "--upgrade",
+                "--no-deps",
                 "-r",
                 "requirements.txt",
                 "-t",
-                "./lib",
+                ".{}lib".format(os.path.sep),
             ],
             cwd=CWD,
+            shell=platform.system() == "Windows",
         )
-        subprocess.call(["rm", "-rf", "./lib/asyncio"], cwd=CWD)
-        with open("{}/lib/deepcode/__main__.py".format(CWD), "w") as f:
+        with open(
+            "{0}{1}lib{1}deepcode{1}__main__.py".format(CWD, os.path.sep), "w"
+        ) as f:
             f.write(CLI_STARTER)
     except Exception as e:
+        if python_command == "python3":
+            return patch_local_deepcode(python_command="python")
         print("path local deepcode exception: ", e)
         sublime.error_message(
             "There was an error installing/upgrading deepcode scripts"
