@@ -2,7 +2,7 @@ ERROR = 3
 WARNING = 2
 INFO = 1
 
-AUTH_TIMEOUT = 60
+AUTH_TIMEOUT = 40
 
 PANEL_NAME = "deepcode"
 HIGHLIGH_REGION_NAME = "deepcode_highlight"
