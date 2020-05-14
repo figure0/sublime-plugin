@@ -30,7 +30,10 @@ def login(view):
             "login",
             python_command=python_command,
         ) as proc:
-            if "python3" in proc.stderr.read().decode("utf-8"):
+            error = proc.stderr.read().decode("utf-8")
+            print("LOGIN ERROROR", python_command, error)
+            if python_command == "python3":
+                proc.kill()
                 raise "Login Failed"
             t = Timer(AUTH_TIMEOUT, lambda: terminate_login(view, proc))
             t.start()
