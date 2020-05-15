@@ -38,28 +38,56 @@ def is_global_python_version_compatible(python_command="python3"):
             if major < 3 or minor < 6 or (minor == 6 and patch < 5):
                 raise Exception("Global Python version has to be 3.6.5 or higher")
         set_is_python_version_valid(True)
-        return True
+        return python_command
     except Exception as e:
         if python_command == "python3":
             return is_global_python_version_compatible(python_command="python")
         sublime.error_message(
-            "This plugin requires python >= 3.6.5. If you want to use a virtual python environment, please adjust package setting 'customPythonPath'"
+            "DeepCodeAI plugin requires python >= 3.6.5. If you want to use a virtual python environment, please adjust package setting 'customPythonPath'"
         )
         return False
 
 
-def patch_local_deepcode(python_command="python3"):
+def get_pip_command(python_command):
+    commands = [
+        [python_command, "-m", "pip", "-V"],
+        [python_command, "-m", "pip3", "-V"],
+        ["pip3", "-V"],
+        ["pip", "-V"],
+    ]
+
+    def get_pip(comand_index=0):
+        try:
+            with subprocess.Popen(
+                commands[comand_index],
+                stdout=subprocess.PIPE,
+                stderr=subprocess.PIPE,
+                shell=platform.system() == "Windows",
+            ) as proc:
+                res = re.findall(
+                    r"pip ([\d|\.]+).*", proc.stdout.read().decode("utf-8")
+                )
+                if len(res) > 0:
+                    return commands[comand_index][:-1]
+
+                raise Exception("pip error")
+        except Exception as e:
+            if comand_index == len(commands) - 1:
+                sublime.error_message(
+                    "DeepCodeAI plugin requires you to have python pip globally available. \n\nFor more instructions visit: \nhttps://pip.pypa.io/en/stable/installing"
+                )
+            elif comand_index < len(commands) - 1:
+                return get_pip(comand_index=comand_index + 1)
+
+    return get_pip()
+
+
+def patch_local_deepcode(pip_command):
+    CWD = os.path.dirname(os.path.realpath(__file__))
     try:
-        CWD = os.path.dirname(os.path.realpath(__file__))
         subprocess.call(
-            [python_command, "-m", "pip", "install", "-U", "pip"],
-            shell=platform.system() == "Windows",
-        )
-        subprocess.call(
-            [
-                python_command,
-                "-m",
-                "pip",
+            pip_command
+            + [
                 "install",
                 "--upgrade",
                 "--no-deps",
@@ -76,11 +104,9 @@ def patch_local_deepcode(python_command="python3"):
         ) as f:
             f.write(CLI_STARTER)
     except Exception as e:
-        if python_command == "python3":
-            return patch_local_deepcode(python_command="python")
         print("path local deepcode exception: ", e)
         sublime.error_message(
-            "There was an error installing/upgrading deepcode scripts"
+            "There was an error installing/upgrading DeepCodeAI scripts"
         )
 
 

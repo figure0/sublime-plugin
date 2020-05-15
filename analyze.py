@@ -31,8 +31,8 @@ def login(view):
             python_command=python_command,
         ) as proc:
             error = proc.stderr.read().decode("utf-8")
-            print("LOGIN ERROROR", python_command, error)
-            if python_command == "python3":
+            print("LOGIN ERROROR", python_command, error, bool(error))
+            if bool(error) and python_command == "python3":
                 proc.kill()
                 raise "Login Failed"
             t = Timer(AUTH_TIMEOUT, lambda: terminate_login(view, proc))
@@ -107,16 +107,14 @@ def analyze(project_path, view, python_command="python3"):
             }
         url = parsedData.get("url")
 
+        project_name = project_path.split(os.path.sep)[-1]
+        file_issues = {}
         for k, v in results.items():
             if k == "files":
                 for deepcode_relpath, pv in v.items():
-                    v[
-                        project_path
-                        + deepcode_relpath.split(project_path.split(os.path.sep)[-1])[
-                            -1
-                        ]
-                    ] = v.pop(deepcode_relpath)
+                    file_issues[project_path + deepcode_relpath] = pv
 
+        results["files"] = file_issues
         return [results, url]
     except Exception as e:
         print(str(e))
