@@ -50,8 +50,8 @@ def is_global_python_version_compatible(python_command="python3"):
 
 def get_pip_command(python_command):
     commands = [
-        [python_command, "-m", "pip", "-V"],
         [python_command, "-m", "pip3", "-V"],
+        [python_command, "-m", "pip", "-V"],
         ["pip3", "-V"],
         ["pip", "-V"],
     ]
