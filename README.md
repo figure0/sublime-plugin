@@ -5,18 +5,26 @@
 
 # Table of Contents
 
-1. DeepCode package - what is it?
-2. Installation
-   1. How to install the package
-   2. Tips on project onboarding
-3. How to use it?
-   1. How to analyze project
-   2. How to open results panel 
-   3. How to ignore suggestions
-   4. Rescan
-   5. View results online
-   6. Settings
-4. Feedback and contact
+- [DeepCodeAI package for Sublime](#deepcodeai-package-for-sublime)
+- [Table of Contents](#table-of-contents)
+- [DeepCode package](#deepcode-package)
+  - [DeepCode's AI Engine finds bugs](#deepcodes-ai-engine-finds-bugs)
+  - [Our AI provides explanation behind found bugs](#our-ai-provides-explanation-behind-found-bugs)
+  - [Supported languages](#supported-languages)
+- [Installation](#installation)
+  - [Prerequisites](#prerequisites)
+  - [How to install the package](#how-to-install-the-package)
+      - [Command Palette](#command-palette)
+  - [Tips on project onboarding](#tips-on-project-onboarding)
+- [How to use it?](#how-to-use-it)
+  - [Scan or Rescan from context menu](#scan-or-rescan-from-context-menu)
+  - [Analysis on Save](#analysis-on-save)
+  - [How to ignore suggestions](#how-to-ignore-suggestions)
+  - [Opening Results Panel](#opening-results-panel)
+  - [Results Panel](#results-panel)
+      - [Actions from Results Panel:](#actions-from-results-panel)
+  - [Settings](#settings)
+- [Feedback and contact](#feedback-and-contact)
 
 # DeepCode package
 
