@@ -23,6 +23,10 @@ custom_env["LC_CTYPE"] = "en_US.UTF-8"
 custom_env["LC_ALL"] = "en_US.UTF-8"
 custom_env["LANG"] = "en_US.UTF-8"
 
+
+def get_env():
+    return custom_env
+
 def get_python_command(python_command="python3"):
     try:
         with subprocess.Popen(
@@ -30,7 +34,7 @@ def get_python_command(python_command="python3"):
             stdout=subprocess.PIPE,
             stderr=subprocess.PIPE,
             shell=platform.system() == "Windows",
-            env=custom_env
+            env=get_env()
         ) as proc:
             [major, minor, patch] = [
                 int(x)
@@ -67,7 +71,7 @@ def get_pip_command(python_command):
                 stdout=subprocess.PIPE,
                 stderr=subprocess.PIPE,
                 shell=platform.system() == "Windows",
-                env=custom_env
+                env=get_env()
             ) as proc:
                 res = re.findall(
                     r"pip ([\d|\.]+).*", proc.stdout.read().decode("utf-8")
@@ -103,7 +107,7 @@ def patch_local_deepcode(pip_command):
             ],
             cwd=CWD,
             shell=platform.system() == "Windows",
-            env=custom_env
+            env=get_env()
         )
         with open(
             "{0}{1}deepcode_lib{1}deepcode{1}__main__.py".format(sublime.cache_path(), os.path.sep), "w"
@@ -119,22 +123,21 @@ def patch_local_deepcode(pip_command):
 def merge_two_lists(fst, snd):
     return fst + list(set(snd) - set(fst))
 
-
 def fix_python_path_if_needed():
     if platform.system() == "Darwin":
         updated_paths = ":".join(
             merge_two_lists(MAC_OS_BIN_PATHS, os.environ["PATH"].split(":"))
         )
-        os.environ["PATH"] = updated_paths
+        custom_env["PATH"] = updated_paths
     elif platform.system() == "Linux":
         updated_paths = ":".join(
             merge_two_lists(LINUX_BIN_PATHS, os.environ["PATH"].split(":"))
         )
-        os.environ["PATH"] = updated_paths
+        custom_env["PATH"] = updated_paths
 
     custom_python_path = get_custom_python_path()
     if custom_python_path:
-        os.environ["PATH"] = "{}:{}".format(os.environ["PATH"], custom_python_path)
+        custom_env["PATH"] = "{}:{}".format(os.environ["PATH"], custom_python_path)
 
 
 def find(point, errors):
@@ -160,3 +163,6 @@ def get_error_count(error_info, message):
     if error_info[INFO] > 0:
         message += "ⓘ {} ".format(error_info[INFO])
     return message
+
+fix_python_path_if_needed()
+
