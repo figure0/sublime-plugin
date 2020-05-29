@@ -5,7 +5,7 @@ import sublime_plugin
 
 from .utils import (
     get_pip_command,
-    is_global_python_version_compatible,
+    get_python_command,
     patch_local_deepcode,
     fix_python_path_if_needed,
 )
@@ -22,7 +22,7 @@ os.environ["LANG"] = "en_US.UTF-8"
 
 def plugin_loaded():
     fix_python_path_if_needed()
-    python_command = is_global_python_version_compatible()
+    python_command = get_python_command()
     if not python_command:
         return
     pip_command = get_pip_command(python_command)

@@ -66,15 +66,19 @@ def authenticate(view):
 
 
 def deepcode(*args, python_command="python3"):
-    MODULE_DIR = "{}{}lib".format(
-        os.path.dirname(os.path.realpath(__file__)), os.path.sep
-    )
+    MODULE_DIR = "{}{}deepcode_lib".format(sublime.cache_path(), os.path.sep)
+    custom_env = os.environ.copy()
+    custom_env["LC_CTYPE"] = "en_US.UTF-8"
+    custom_env["LC_ALL"] = "en_US.UTF-8"
+    custom_env["LANG"] = "en_US.UTF-8"
+
     return subprocess.Popen(
         [python_command, "-m", "deepcode"] + list(args),
         stdout=subprocess.PIPE,
         stderr=subprocess.PIPE,
         cwd=MODULE_DIR,
         shell=platform.system() == "Windows",
+        env=custom_env
     )
 
 

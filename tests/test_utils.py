@@ -2,10 +2,10 @@ import os
 import sublime
 import unittest
 
-from ..consts import INFO, WARNING, ERROR
-from ..utils import (
+from DeepcodeAI.consts import INFO, WARNING, ERROR
+from DeepcodeAI.utils import (
     find,
-    is_global_python_version_compatible,
+    get_python_command,
     merge_two_lists,
     get_severity_status_string,
     get_error_count,
@@ -39,15 +39,15 @@ class TestUtils(unittest.TestCase):
         elem = find(point, errors)
         self.assertRaises(Exception)
 
-    def test_is_global_python_version_compatible_success(self):
-        return_val = is_global_python_version_compatible()
-        self.assertEqual(return_val, True)
+    def test_get_python_command_success(self):
+        return_val = get_python_command()
+        self.assertEqual(return_val, 'python3')
 
-    def test_is_global_python_version_compatible_fail(self):
+    def test_get_python_command_fail(self):
         os.environ["PATH"] = os.path.sep
         sublime.error_message = print
-        return_val = is_global_python_version_compatible()
-        self.assertEqual(return_val, False)
+        return_val = get_python_command()
+        self.assertIsNone(return_val)
         os.environ["PATH"] = self.real_path_environ
         sublime.error_message = self.subl_error_message
 
