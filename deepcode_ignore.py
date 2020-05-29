@@ -32,12 +32,11 @@ def update_highlighted_region(view, point, with_new_line=False):
         view.rowcol(target["region"][-1]),
     )
     if with_new_line:
-        x1 = x1 + 1
-        x2 = x2 + 1
+        x1 += 1
+        x2 += 1
     else:
         # for some reason one character goes missing between comments
-        print("WTF")
-        y2 = y2 + 1
+        y2 += 1
 
     def update_points():
         error_start_point, error_end_point = (

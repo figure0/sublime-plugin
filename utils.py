@@ -18,14 +18,19 @@ if __name__ == '__main__':
     sys.exit(main())
 """
 
+custom_env = os.environ.copy()
+custom_env["LC_CTYPE"] = "en_US.UTF-8"
+custom_env["LC_ALL"] = "en_US.UTF-8"
+custom_env["LANG"] = "en_US.UTF-8"
 
-def is_global_python_version_compatible(python_command="python3"):
+def get_python_command(python_command="python3"):
     try:
         with subprocess.Popen(
             [python_command, "-V"],
             stdout=subprocess.PIPE,
             stderr=subprocess.PIPE,
             shell=platform.system() == "Windows",
+            env=custom_env
         ) as proc:
             [major, minor, patch] = [
                 int(x)
@@ -41,11 +46,10 @@ def is_global_python_version_compatible(python_command="python3"):
         return python_command
     except Exception as e:
         if python_command == "python3":
-            return is_global_python_version_compatible(python_command="python")
+            return get_python_command(python_command="python")
         sublime.error_message(
             "DeepCodeAI plugin requires python >= 3.6.5. If you want to use a virtual python environment, please adjust package setting 'customPythonPath'"
         )
-        return False
 
 
 def get_pip_command(python_command):
@@ -63,6 +67,7 @@ def get_pip_command(python_command):
                 stdout=subprocess.PIPE,
                 stderr=subprocess.PIPE,
                 shell=platform.system() == "Windows",
+                env=custom_env
             ) as proc:
                 res = re.findall(
                     r"pip ([\d|\.]+).*", proc.stdout.read().decode("utf-8")
@@ -94,13 +99,14 @@ def patch_local_deepcode(pip_command):
                 "-r",
                 "requirements.txt",
                 "-t",
-                ".{}lib".format(os.path.sep),
+                "{}{}deepcode_lib".format(sublime.cache_path(), os.path.sep),
             ],
             cwd=CWD,
             shell=platform.system() == "Windows",
+            env=custom_env
         )
         with open(
-            "{0}{1}lib{1}deepcode{1}__main__.py".format(CWD, os.path.sep), "w"
+            "{0}{1}deepcode_lib{1}deepcode{1}__main__.py".format(sublime.cache_path(), os.path.sep), "w"
         ) as f:
             f.write(CLI_STARTER)
     except Exception as e:

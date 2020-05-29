@@ -2,7 +2,7 @@ import unittest
 from unittest.mock import patch, MagicMock
 
 
-from ..session import (
+from DeepcodeAI.session import (
     SESSION_STORAGE,
     set_is_python_version_valid,
     is_python_version_valid,

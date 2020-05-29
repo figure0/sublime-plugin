@@ -1,7 +1,7 @@
 import unittest
 
-from ..consts import ERROR, WARNING, INFO
-from ..popup import get_color_for_severity
+from DeepcodeAI.consts import ERROR, WARNING, INFO
+from DeepcodeAI.popup import get_color_for_severity
 
 
 class TestUtils(unittest.TestCase):
