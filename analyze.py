@@ -11,7 +11,7 @@ from .consts import AUTH_TIMEOUT
 from .progress import handle_progress_update
 from .settings import get_service_url, get_linters_enabled, set_token, get_token
 from .statuses import set_status
-
+from .utils import get_env
 
 def terminate_login(view, proc):
     proc.kill()
@@ -67,10 +67,6 @@ def authenticate(view):
 
 def deepcode(*args, python_command="python3"):
     MODULE_DIR = "{}{}deepcode_lib".format(sublime.cache_path(), os.path.sep)
-    custom_env = os.environ.copy()
-    custom_env["LC_CTYPE"] = "en_US.UTF-8"
-    custom_env["LC_ALL"] = "en_US.UTF-8"
-    custom_env["LANG"] = "en_US.UTF-8"
 
     return subprocess.Popen(
         [python_command, "-m", "deepcode"] + list(args),
@@ -78,7 +74,7 @@ def deepcode(*args, python_command="python3"):
         stderr=subprocess.PIPE,
         cwd=MODULE_DIR,
         shell=platform.system() == "Windows",
-        env=custom_env
+        env=get_env()
     )
 
 

@@ -7,7 +7,6 @@ from .utils import (
     get_pip_command,
     get_python_command,
     patch_local_deepcode,
-    fix_python_path_if_needed,
 )
 from .settings import set_initial_settings_if_needed
 from .session import (
@@ -15,13 +14,8 @@ from .session import (
     add_project_to_initial_analysis_ran_list,
 )
 
-os.environ["LC_CTYPE"] = "en_US.UTF-8"
-os.environ["LC_ALL"] = "en_US.UTF-8"
-os.environ["LANG"] = "en_US.UTF-8"
-
 
 def plugin_loaded():
-    fix_python_path_if_needed()
     python_command = get_python_command()
     if not python_command:
         return
