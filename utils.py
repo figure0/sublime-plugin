@@ -93,6 +93,11 @@ def get_pip_command(python_command):
 
 def patch_local_deepcode(pip_command):
     CWD = os.path.dirname(os.path.realpath(__file__))
+    lib_dir = os.path.join(sublime.cache_path(), 'deepcode_lib')
+    print('sublime.cache_path() --> {}'.format(lib_dir))
+    print('pip_command --> {}'.format(pip_command))
+    print('get_env --> {}'.format(get_env()))
+
     try:
         subprocess.call(
             pip_command
@@ -103,16 +108,16 @@ def patch_local_deepcode(pip_command):
                 "-r",
                 "requirements.txt",
                 "-t",
-                "{}{}deepcode_lib".format(sublime.cache_path(), os.path.sep),
+                lib_dir
             ],
             cwd=CWD,
             shell=platform.system() == "Windows",
             env=get_env()
         )
-        with open(
-            "{0}{1}deepcode_lib{1}deepcode{1}__main__.py".format(sublime.cache_path(), os.path.sep), "w"
-        ) as f:
+
+        with open(os.path.join(lib_dir, 'deepcode', '__main__.py'), "w") as f:
             f.write(CLI_STARTER)
+
     except Exception as e:
         print("path local deepcode exception: ", e)
         sublime.error_message(

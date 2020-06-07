@@ -66,8 +66,8 @@ def authenticate(view):
 
 
 def deepcode(*args, python_command="python3"):
-    MODULE_DIR = "{}{}deepcode_lib".format(sublime.cache_path(), os.path.sep)
-
+    MODULE_DIR = os.path.join(sublime.cache_path(), 'deepcode_lib')
+    
     return subprocess.Popen(
         [python_command, "-m", "deepcode"] + list(args),
         stdout=subprocess.PIPE,
