@@ -1,3 +1,6 @@
+## [0.0.5] - 2020-06-07
+- Bugfixing release
+
 ## [0.0.4] - 2020-05-29
 - Don't override host's environments
 - Changed directory of dependencies to sublime.cache_path()
