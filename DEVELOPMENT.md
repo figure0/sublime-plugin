@@ -18,11 +18,11 @@
 
 All plugin commands are prefixed with `deepcode_*.py`, and all of the util files are without prefix. 
 
-For development after initial load, comment out  `patch_local_deepcode()` , so you dont have to wait for upgrade on each plugin reload.
+For development after initial load, comment out  `install_cli()` , so you dont have to wait for upgrade on each plugin reload.
 
     def plugin_loaded():
         ...
-        patch_local_deepcode()
+        install_cli()
         ...
 
 ### List of commands (helper plugins)

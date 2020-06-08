@@ -4,19 +4,9 @@ import re
 import sublime
 import subprocess
 
-from .consts import WARNING, ERROR, INFO, MAC_OS_BIN_PATHS, LINUX_BIN_PATHS
+from .consts import WARNING, ERROR, INFO, MAC_OS_BIN_PATHS, LINUX_BIN_PATHS, CLI_DEPENDENCY
 from .settings import get_custom_python_path
 from .session import set_is_python_version_valid
-
-CLI_STARTER = """
-# -*- coding: utf-8 -*-
-import re
-import sys
-from deepcode.cli import main
-if __name__ == '__main__':
-    sys.argv[0] = re.sub(r'(-script\.pyw|\.exe)?$', '', sys.argv[0])
-    sys.exit(main())
-"""
 
 custom_env = os.environ.copy()
 custom_env["LC_CTYPE"] = "en_US.UTF-8"
@@ -34,7 +24,7 @@ def get_python_command(python_command="python3"):
             stdout=subprocess.PIPE,
             stderr=subprocess.PIPE,
             shell=platform.system() == "Windows",
-            env=get_env()
+            env=custom_env
         ) as proc:
             [major, minor, patch] = [
                 int(x)
@@ -55,8 +45,9 @@ def get_python_command(python_command="python3"):
             "DeepCodeAI plugin requires python >= 3.6.5. If you want to use a virtual python environment, please adjust package setting 'customPythonPath'"
         )
 
+python_command = get_python_command()
 
-def get_pip_command(python_command):
+def get_pip_command():
     commands = [
         [python_command, "-m", "pip3", "-V"],
         [python_command, "-m", "pip", "-V"],
@@ -71,7 +62,7 @@ def get_pip_command(python_command):
                 stdout=subprocess.PIPE,
                 stderr=subprocess.PIPE,
                 shell=platform.system() == "Windows",
-                env=get_env()
+                env=custom_env
             ) as proc:
                 res = re.findall(
                     r"pip ([\d|\.]+).*", proc.stdout.read().decode("utf-8")
@@ -91,24 +82,22 @@ def get_pip_command(python_command):
     return get_pip()
 
 
-def patch_local_deepcode(pip_command):
+def install_cli():
+    if not python_command:
+        return
+    pip_command = get_pip_command()
+    if not pip_command:
+        return
+
     CWD = os.path.dirname(os.path.realpath(__file__))
-    print('CWD --> {}'.format(CWD))
-
     lib_dir = os.path.join(sublime.cache_path(), 'deepcode_lib')
-    print('sublime.cache_path() --> {}'.format(lib_dir))
-    print('pip_command --> {}'.format(pip_command))
-    print('get_env --> {}'.format(get_env()))
-
+    
     try:
         subprocess.check_call(
             pip_command
             + [
                 "install",
-                "--upgrade",
-                "--no-deps",
-                "-r",
-                "requirements.txt",
+                CLI_DEPENDENCY,
                 "-t",
                 lib_dir
             ],
@@ -116,9 +105,6 @@ def patch_local_deepcode(pip_command):
             shell=platform.system() == "Windows",
             env=get_env()
         )
-
-        with open(os.path.join(lib_dir, 'deepcode', '__main__.py'), "w") as f:
-            f.write(CLI_STARTER)
 
     except Exception as e:
         print("path local deepcode exception: ", e)

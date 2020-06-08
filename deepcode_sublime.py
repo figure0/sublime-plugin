@@ -3,11 +3,7 @@ import sublime
 import sublime_plugin
 
 
-from .utils import (
-    get_pip_command,
-    get_python_command,
-    patch_local_deepcode,
-)
+from .utils import install_cli
 from .settings import set_initial_settings_if_needed
 from .session import (
     is_initial_analysis_ran_for_project,
@@ -16,13 +12,7 @@ from .session import (
 
 
 def plugin_loaded():
-    python_command = get_python_command()
-    if not python_command:
-        return
-    pip_command = get_pip_command(python_command)
-    if not pip_command:
-        return
-    patch_local_deepcode(pip_command)
+    install_cli()
     set_initial_settings_if_needed()
 
 

@@ -1,5 +1,8 @@
-## [0.0.5] - 2020-06-07
-- Bugfixing release
+## [1.0.0] - 2020-06-08
+- First release, published on Sublime Package Manager
+
+## [0.0.5 - 0.0.6] - 2020-06-07
+- Bugfixing
 
 ## [0.0.4] - 2020-05-29
 - Don't override host's environments
