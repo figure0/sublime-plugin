@@ -93,13 +93,15 @@ def get_pip_command(python_command):
 
 def patch_local_deepcode(pip_command):
     CWD = os.path.dirname(os.path.realpath(__file__))
+    print('CWD --> {}'.format(CWD))
+
     lib_dir = os.path.join(sublime.cache_path(), 'deepcode_lib')
     print('sublime.cache_path() --> {}'.format(lib_dir))
     print('pip_command --> {}'.format(pip_command))
     print('get_env --> {}'.format(get_env()))
 
     try:
-        subprocess.call(
+        subprocess.check_call(
             pip_command
             + [
                 "install",
