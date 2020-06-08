@@ -11,7 +11,7 @@ from .consts import AUTH_TIMEOUT
 from .progress import handle_progress_update
 from .settings import get_service_url, get_linters_enabled, set_token, get_token
 from .statuses import set_status
-from .utils import get_env
+from .utils import get_env, python_command
 
 def terminate_login(view, proc):
     proc.kill()
@@ -19,20 +19,18 @@ def terminate_login(view, proc):
 
 
 def login(view):
-    python_command = "python3"
 
-    def cli_login(python_command):
+    def cli_login():
         with deepcode(
             "--service-url",
             get_service_url(),
             "--source",
             "sublime",
-            "login",
-            python_command=python_command,
+            "login"
         ) as proc:
             error = proc.stderr.read().decode("utf-8")
-            print("LOGIN ERROROR", python_command, error, bool(error))
-            if bool(error) and python_command == "python3":
+            print("LOGIN ERROROR", error, bool(error))
+            if bool(error):
                 proc.kill()
                 raise "Login Failed"
             t = Timer(AUTH_TIMEOUT, lambda: terminate_login(view, proc))
@@ -49,12 +47,7 @@ def login(view):
     )
     if continue_with_login:
         set_status(view, "DeepCode: Please, complete login process in opened browser.")
-        try:
-            return cli_login(python_command)
-        except Exception as e:
-            if python_command == "python3":
-                python_command = "python"
-                return cli_login(python_command)
+        return cli_login()
 
 
 def authenticate(view):
@@ -65,20 +58,19 @@ def authenticate(view):
     sublime.set_timeout_async(lambda: view.window().run_command("deepcode_analyze"), 0)
 
 
-def deepcode(*args, python_command="python3"):
+def deepcode(*args):
     MODULE_DIR = os.path.join(sublime.cache_path(), 'deepcode_lib')
-    
     return subprocess.Popen(
-        [python_command, "-m", "deepcode"] + list(args),
+        [python_command, os.path.join("bin", "deepcode")] + list(args),
         stdout=subprocess.PIPE,
         stderr=subprocess.PIPE,
         cwd=MODULE_DIR,
         shell=platform.system() == "Windows",
-        env=get_env()
+        env=dict(get_env(), PYTHONPATH=MODULE_DIR)
     )
 
 
-def analyze(project_path, view, python_command="python3"):
+def analyze(project_path, view):
     args = [
         "--service-url",
         get_service_url(),
@@ -92,7 +84,7 @@ def analyze(project_path, view, python_command="python3"):
         args.append("--with-linters")
 
     try:
-        proc = deepcode(*args, python_command=python_command)
+        proc = deepcode(*args)
         progress_data = io.TextIOWrapper(proc.stderr, encoding="utf-8")
         handle_progress_update(progress_data, view)
 
@@ -125,7 +117,5 @@ def analyze(project_path, view, python_command="python3"):
             set_status(view, "DeepCode: 🚧 Service Unavailable")
             proc.kill()
         else:
-            if python_command == "python3":
-                return analyze(project_path, view, python_command="python")
             print("SOMETHING UNEXPECTED", e)
             set_status(view, "DeepCode: ❌ Project Analyze Failed")
