@@ -89,10 +89,16 @@ def install_cli():
     if not pip_command:
         return
 
-    CWD = os.path.dirname(os.path.realpath(__file__))
-    lib_dir = os.path.join(sublime.cache_path(), 'deepcode_lib')
+    cache_path = sublime.cache_path()
+    lib_dir = os.path.join(cache_path, 'deepcode_lib')
     
     try:
+        subprocess.check_call(
+            ['mkdir', '-p', 'deepcode_lib'],
+            cwd=cache_path,
+            shell=platform.system() == "Windows"
+        )
+
         subprocess.check_call(
             pip_command
             + [
@@ -101,7 +107,7 @@ def install_cli():
                 "-t",
                 lib_dir
             ],
-            cwd=CWD,
+            cwd=cache_path,
             shell=platform.system() == "Windows",
             env=get_env()
         )
