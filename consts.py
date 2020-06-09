@@ -28,23 +28,23 @@ MAIN_STATUSES = [
 
 SUB_STATUSES = ["Found files", "Calculated hashes", "Generated bundles"]
 
-MAC_OS_BIN_PATHS = [
-    "/bin",
-    "/usr/bin",
-    "/usr/sbin",
-    "/usr/local/bin",
-    "/sbin",
-    "/usr/X11/bin",
-]
+# MAC_OS_BIN_PATHS = [
+#     "/bin",
+#     "/usr/bin",
+#     "/usr/sbin",
+#     "/usr/local/bin",
+#     "/sbin",
+#     "/usr/X11/bin",
+# ]
 
-LINUX_BIN_PATHS = [
-    "/bin",
-    "/sbin",
-    "/usr/bin",
-    "/usr/sbin",
-    "/usr/local/bin",
-    "/usr/local/sbin",
-    "/usr/X11/bin",
-    "/opt",
-    "/opt/bin",
-]
+# LINUX_BIN_PATHS = [
+#     "/bin",
+#     "/sbin",
+#     "/usr/bin",
+#     "/usr/sbin",
+#     "/usr/local/bin",
+#     "/usr/local/sbin",
+#     "/usr/X11/bin",
+#     "/opt",
+#     "/opt/bin",
+# ]

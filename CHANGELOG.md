@@ -1,3 +1,6 @@
+## [1.0.1 - 1.0.2] - 2020-06-09
+- Python support fixes
+
 ## [1.0.0] - 2020-06-08
 - First release, published on Sublime Package Manager
 
