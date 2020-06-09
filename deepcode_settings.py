@@ -1,12 +1,10 @@
 import sublime, sublime_plugin, json, os
-from .settings import get_settings
 from .consts import (
-    DEEP_CODE_SETTINGS_DEBUG_KEY,
     DEEP_CODE_SETTINGS_ENABLE_LINTERS_KEY,
     DEEP_CODE_SETTINGS_CONSENT_KEY,
     DEEP_CODE_SETTINGS_SERVICE_URL_KEY,
     DEEP_CODE_SETTINGS_TOKEN_KEY,
-    DEEP_CODE_SETTINGS_CUSTOM_PYTHON_PATH,
+    DEEP_CODE_SETTINGS_CUSTOM_PYTHON,
 )
 from .phantoms import add_settings_key_description_phantom
 
@@ -38,16 +36,13 @@ class DeepcodeSettings(sublime_plugin.EventListener):
                 "Enables liters analyses, along DeepCode analyses.",
             )
             add_settings_key_description_phantom(
-                view, DEEP_CODE_SETTINGS_DEBUG_KEY, "Forward all debugging messages."
-            )
-            add_settings_key_description_phantom(
                 view,
                 DEEP_CODE_SETTINGS_CONSENT_KEY,
                 "List of projects, that you have consented for DeepCode to analyze.",
             )
             add_settings_key_description_phantom(
                 view,
-                DEEP_CODE_SETTINGS_CUSTOM_PYTHON_PATH,
+                DEEP_CODE_SETTINGS_CUSTOM_PYTHON,
                 "Change in case python 3 is installed somewhere atypically on your system.",
             )
 
@@ -108,18 +103,6 @@ class DeepcodeSettings(sublime_plugin.EventListener):
                         )
                     )
 
-                if DEEP_CODE_SETTINGS_DEBUG_KEY in new_settings and not isinstance(
-                    new_settings.get(DEEP_CODE_SETTINGS_DEBUG_KEY), bool
-                ):
-                    sublime.error_message(
-                        "⛔ Settings key {} is invalid, {} must be boolean.".format(
-                            DEEP_CODE_SETTINGS_DEBUG_KEY, DEEP_CODE_SETTINGS_DEBUG_KEY
-                        )
-                    )
-                    errors.append(
-                        view.find(DEEP_CODE_SETTINGS_DEBUG_KEY, 0, sublime.IGNORECASE)
-                    )
-
                 if DEEP_CODE_SETTINGS_CONSENT_KEY in new_settings and not isinstance(
                     new_settings.get(DEEP_CODE_SETTINGS_CONSENT_KEY), list
                 ):
@@ -134,20 +117,20 @@ class DeepcodeSettings(sublime_plugin.EventListener):
                     )
 
                 if (
-                    DEEP_CODE_SETTINGS_CUSTOM_PYTHON_PATH in new_settings
+                    DEEP_CODE_SETTINGS_CUSTOM_PYTHON in new_settings
                     and not isinstance(
-                        new_settings.get(DEEP_CODE_SETTINGS_CUSTOM_PYTHON_PATH), str
+                        new_settings.get(DEEP_CODE_SETTINGS_CUSTOM_PYTHON), str
                     )
                 ):
                     sublime.error_message(
                         "⛔ Settings key {} is invalid, {} must be string.".format(
-                            DEEP_CODE_SETTINGS_CUSTOM_PYTHON_PATH,
-                            DEEP_CODE_SETTINGS_CUSTOM_PYTHON_PATH,
+                            DEEP_CODE_SETTINGS_CUSTOM_PYTHON,
+                            DEEP_CODE_SETTINGS_CUSTOM_PYTHON,
                         )
                     )
                     errors.append(
                         view.find(
-                            DEEP_CODE_SETTINGS_CUSTOM_PYTHON_PATH, 0, sublime.IGNORECASE
+                            DEEP_CODE_SETTINGS_CUSTOM_PYTHON, 0, sublime.IGNORECASE
                         )
                     )
 

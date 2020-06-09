@@ -1,10 +1,8 @@
-import os
 import sublime
 import sublime_plugin
 
 
 from .utils import install_cli
-from .settings import set_initial_settings_if_needed
 from .session import (
     is_initial_analysis_ran_for_project,
     add_project_to_initial_analysis_ran_list,
@@ -13,7 +11,6 @@ from .session import (
 
 def plugin_loaded():
     install_cli()
-    set_initial_settings_if_needed()
 
 
 class Deepcode(sublime_plugin.EventListener):
@@ -22,7 +19,6 @@ class Deepcode(sublime_plugin.EventListener):
             if len(w.folders()) == 0:
                 return
             elif not is_initial_analysis_ran_for_project(w.folders()[0]):
-                print("INITIAL_ANALYSIS")
                 sublime.set_timeout_async(
                     lambda: w.run_command("deepcode_analyze"), 1000
                 )

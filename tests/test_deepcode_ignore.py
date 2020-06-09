@@ -2,7 +2,7 @@ import time
 import unittest
 from unittest.mock import patch
 
-from DeepcodeAI.deepcode_ignore import get_ignore_text, does_comment_exist, update_highlighted_region
+from ..deepcode_ignore import get_ignore_text, does_comment_exist, update_highlighted_region
 
 class CustomDict(dict):
     pass

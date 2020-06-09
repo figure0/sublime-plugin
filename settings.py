@@ -7,25 +7,18 @@ from .consts import (
     DEEP_CODE_SETTINGS_TOKEN_KEY,
     DEEP_CODE_SETTINGS_SERVICE_URL_KEY,
     DEEP_CODE_SETTINGS_ENABLE_LINTERS_KEY,
-    DEEP_CODE_SETTINGS_CUSTOM_PYTHON_PATH,
+    DEEP_CODE_SETTINGS_CUSTOM_PYTHON,
 )
-
-
-def set_initial_settings_if_needed():
-    deepcode_settings = sublime.load_settings("DeepCodeAI.sublime-settings")
-    if deepcode_settings is None:
-        sublime.load_settings("DeepCodeAI.sublime-settings")
-        sublime.save_settings("DeepCodeAI.sublime-settings")
+from .deepcode_settings import SETTINGS_FILE_NAME
 
 
 def get_settings():
-    return sublime.load_settings("DeepCodeAI.sublime-settings")
+    return sublime.load_settings(SETTINGS_FILE_NAME)
 
 
 def set_settings(path, value):
-    settings = sublime.load_settings("DeepCodeAI.sublime-settings")
-    sublime.load_settings("DeepCodeAI.sublime-settings").set(path, value)
-    sublime.save_settings("DeepCodeAI.sublime-settings")
+    get_settings().set(path, value)
+    sublime.save_settings(SETTINGS_FILE_NAME)
 
 
 def get_token():
@@ -59,6 +52,9 @@ def get_linters_enabled():
     return settings.get(DEEP_CODE_SETTINGS_ENABLE_LINTERS_KEY, "")
 
 
-def get_custom_python_path():
+def get_python_command():
     settings = get_settings()
-    return settings.get(DEEP_CODE_SETTINGS_CUSTOM_PYTHON_PATH, None)
+    return settings.get(DEEP_CODE_SETTINGS_CUSTOM_PYTHON, None)
+
+def set_python_command(value):
+    set_settings(DEEP_CODE_SETTINGS_CUSTOM_PYTHON, value)

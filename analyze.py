@@ -9,9 +9,9 @@ from threading import Timer
 
 from .consts import AUTH_TIMEOUT
 from .progress import handle_progress_update
-from .settings import get_service_url, get_linters_enabled, set_token, get_token
+from .settings import get_service_url, get_linters_enabled, set_token, get_token, get_python_command
 from .statuses import set_status
-from .utils import get_env, python_command
+from .utils import get_custom_env
 
 def terminate_login(view, proc):
     proc.kill()
@@ -61,12 +61,12 @@ def authenticate(view):
 def deepcode(*args):
     MODULE_DIR = os.path.join(sublime.cache_path(), 'deepcode_lib')
     return subprocess.Popen(
-        [python_command, os.path.join("bin", "deepcode")] + list(args),
+        [get_python_command(), os.path.join("bin", "deepcode")] + list(args),
         stdout=subprocess.PIPE,
         stderr=subprocess.PIPE,
         cwd=MODULE_DIR,
         shell=platform.system() == "Windows",
-        env=dict(get_env(), PYTHONPATH=MODULE_DIR)
+        env=dict(get_custom_env(), PYTHONPATH=MODULE_DIR)
     )
 
 

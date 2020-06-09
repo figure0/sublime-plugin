@@ -1,8 +1,0 @@
-{
-	"serviceUrl": "https://www.deepcode.ai",
-	"enableLinters": false,
-	"debug": false,
-	"consented": [],
-	"token": null,
-	"customPythonPath": null
-}

@@ -2,14 +2,16 @@ import os
 import sublime
 import unittest
 
-from DeepcodeAI.consts import INFO, WARNING, ERROR
-from DeepcodeAI.utils import (
+from ..consts import INFO, WARNING, ERROR
+from ..utils import (
     find,
     get_default_python_command,
-    merge_two_lists,
     get_severity_status_string,
     get_error_count,
 )
+
+def merge_two_lists(fst, snd):
+    return fst + list(set(snd) - set(fst))
 
 
 class TestUtils(unittest.TestCase):

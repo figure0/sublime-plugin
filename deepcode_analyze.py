@@ -10,23 +10,20 @@ from .settings import get_token, get_consented, set_consented
 from .statuses import set_status
 from .session import (
     add_project_to_asked_to_consent,
-    is_python_version_valid,
     user_asked_to_consent_for_project,
     add_project_to_initial_analysis_ran_list,
 )
 
 
 def run_analysis(view, on_save=False):
+    print("RUN ANALYSIS")
+
     if not is_connected_to_internet():
         set_status(view, "DeepCode: ❌ No Internet Connection  ")
         return
 
     if not view.window() or len(view.window().folders()) == 0:
-        set_status(view, "DeepCode: ⚠")
-        return
-
-    if not is_python_version_valid():
-        set_status(view, "DeepCode: ⚠")
+        set_status(view, "DeepCode: ⚠ No folders")
         return
 
     project_path = view.window().folders()[0]
@@ -37,6 +34,7 @@ def run_analysis(view, on_save=False):
     token = get_token()
     if token is None:
         return
+    
     if project_path not in get_consented():
         set_status(view, "DeepCode: Not activated for this project 🔐  ")
         if on_save and user_asked_to_consent_for_project(project_path):
