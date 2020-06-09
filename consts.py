@@ -4,7 +4,7 @@ INFO = 1
 
 AUTH_TIMEOUT = 40
 
-CLI_DEPENDENCY = "deepcode==1.0.14"
+CLI_DEPENDENCY = "deepcode==1.0.15"
 
 PANEL_NAME = "deepcode"
 HIGHLIGH_REGION_NAME = "deepcode_highlight"
